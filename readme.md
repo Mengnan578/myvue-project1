@@ -602,7 +602,27 @@ params参数对应的路由信息要修改为path: "/search/:keyword" 这里的/
 
 ### day3：home拆分组件
 
-1，三级联动注册为全局组件
+1，三级联动注册为全局组件	
+
+​	全局组件需要有名字，在组件的script中加入名字
+
+```javascript
+<script>
+export default {
+    name:"TypeNav"
+}
+</script>
+```
+
+​	在main.js中注册全局组件
+
+```javascript
+// 三级联动组件 --- 注册为全局组件
+import TypeNav from '@/pages/Home/TypeNav'
+Vue.component(TypeNav.name, TypeNav);
+```
+
+2，注册一般组件
 
 
 

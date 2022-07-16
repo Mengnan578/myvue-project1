@@ -2,22 +2,13 @@
   <!-- 商品分类导航 -->
         <div class="type-nav">
             <div class="container">
-                <h2 class="all">全部商品分类</h2>
-                <nav class="nav">
-                    <a href="###">服装城</a>
-                    <a href="###">美妆馆</a>
-                    <a href="###">尚品汇超市</a>
-                    <a href="###">全球购</a>
-                    <a href="###">闪购</a>
-                    <a href="###">团购</a>
-                    <a href="###">有趣</a>
-                    <a href="###">秒杀</a>
-                </nav>
-                <div class="sort">
+                <div @mouseleave="leaveIndex()">
+                    <h2 class="all">全部商品分类</h2>
+                    <div class="sort">
                     <div class="all-sort-list2">
-                        <div class="item" v-for="(c1,index) in categoryList":key="c1.categoryId" >
-                            <h3>
-                                <a href="">{{c1.categoryName}}</a>
+                        <div class="item" v-for="(c1,index) in categoryList":key="c1.categoryId" :class="{cur:currentedIndex==index}">
+                            <h3 @mouseenter="changeIndex(index)">
+                                <a href="">{{c1.categoryName}}-{{index}}</a>
                             </h3>
                             <div class="item-list clearfix">
                                 <div class="subitem" v-for="(c2,index) in c1.categoryChild":key="c2.categoryId">
@@ -36,6 +27,17 @@
                         </div>
                     </div>
                 </div>
+                </div>
+                <nav class="nav">
+                    <a href="###">服装城</a>
+                    <a href="###">美妆馆</a>
+                    <a href="###">尚品汇超市</a>
+                    <a href="###">全球购</a>
+                    <a href="###">闪购</a>
+                    <a href="###">团购</a>
+                    <a href="###">有趣</a>
+                    <a href="###">秒杀</a>
+                </nav>
             </div>
         </div>
 </template>
@@ -44,6 +46,12 @@
 import {mapState} from "vuex";
 export default {
     name:"TypeNav",
+    data(){
+        return {
+            // 存储用户鼠标移上哪一个分类
+            currentedIndex: -1
+        }
+    },
     // 当组件挂载
     mounted(){
         // 通知vue发送请求，获取数据，存储在仓库中
@@ -54,6 +62,17 @@ export default {
             // 右侧需要的使用一个函数
             categoryList:state=> state.home.categoryList
         })
+    },
+    methods:{
+        // 鼠标移入一级分类回调
+        changeIndex(index){
+            // index 鼠标移动上某一个一级分类的index
+            this.currentedIndex=index;
+        },
+        // 鼠标移除三级分类回调
+        leaveIndex(){
+            this.currentedIndex=-1
+        }
     }
 }
 </script>
@@ -178,6 +197,9 @@ export default {
                     // .item:hover{
                     //     background: skyblue;
                     // }
+                    .cur{
+                        background: skyblue;
+                    }
                 }
             }
         }

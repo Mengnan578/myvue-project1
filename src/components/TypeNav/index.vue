@@ -3,14 +3,17 @@
         <div class="type-nav">
             <div class="container">
                 <div @mouseleave="leaveIndex()">
+                <!-- 事件委派 -->
                     <h2 class="all">全部商品分类</h2>
+                    <!-- 三级联动 -->
                     <div class="sort">
                     <div class="all-sort-list2">
                         <div class="item" v-for="(c1,index) in categoryList":key="c1.categoryId" :class="{cur:currentedIndex==index}">
                             <h3 @mouseenter="changeIndex(index)">
                                 <a href="">{{c1.categoryName}}-{{index}}</a>
                             </h3>
-                            <div class="item-list clearfix">
+                            <!-- 二级联动 -->
+                            <div class="item-list clearfix" :style="{display:currentedIndex==index?'block':'none'}">
                                 <div class="subitem" v-for="(c2,index) in c1.categoryChild":key="c2.categoryId">
                                     <dl class="fore">
                                         <dt>
@@ -187,11 +190,11 @@ export default {
                             }
                         }
 
-                        &:hover {
-                            .item-list {
-                                display: block;
-                            }
-                        }
+                        // &:hover {
+                        //     .item-list {
+                        //         display: block;
+                        //     }
+                        // }
                     }
                     // 三级联动样式写法-：css写法
                     // .item:hover{

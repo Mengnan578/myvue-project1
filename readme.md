@@ -602,7 +602,7 @@ params参数对应的路由信息要修改为path: "/search/:keyword" 这里的/
 
 ### day3：home拆分组件
 
-1，三级联动注册为全局组件	
+##### 1，三级联动注册为全局组件	
 
 ​	全局组件需要有名字，在组件的script中加入名字
 
@@ -622,7 +622,17 @@ import TypeNav from '@/pages/Home/TypeNav'
 Vue.component(TypeNav.name, TypeNav);
 ```
 
-2，注册一般组件
+##### 2，注册一般组件
+
+​	过于没水平，直接略过
+
+##### 3，api统一管理
+
+​	1，重写axios
+
+​	2，统一管理请求
+
+​	3，前端处理跨域（三种方法：代理，jsonp，cros）
 
 
 

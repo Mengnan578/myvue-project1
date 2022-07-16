@@ -15,7 +15,7 @@
                 </nav>
                 <div class="sort">
                     <div class="all-sort-list2">
-                        <div class="item" v-for="(c1,index) in categoryList":key="c1.categoryId">
+                        <div class="item" v-for="(c1,index) in categoryList":key="c1.categoryId" >
                             <h3>
                                 <a href="">{{c1.categoryName}}</a>
                             </h3>
@@ -175,9 +175,9 @@ export default {
                         }
                     }
                     // 三级联动样式写法-：css写法
-                    .item:hover{
-                        background: skyblue;
-                    }
+                    // .item:hover{
+                    //     background: skyblue;
+                    // }
                 }
             }
         }

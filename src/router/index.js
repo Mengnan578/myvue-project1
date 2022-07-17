@@ -31,6 +31,9 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
     }
 }
 
+
+
+// 配置路由
 export default new VueRouter({
     routes: [
         {
@@ -45,20 +48,20 @@ export default new VueRouter({
             meta: { show: true }
         },
         {
+            path: "/register",
+            component: Register,
+            meta: { show: false }
+        },
+        //重定向
+        {
+            path: '/',
+            redirect: "/home"
+        },
+        {
             path: "/search/:keyWord?",
             component: Search,
             meta: { show: true },
             name: "search"
         },
-        {
-            path: "/register",
-            component: Register,
-            meta: { show: false }
-        },
-        // 重定向
-        {
-            path: '*',
-            redirect: "/home"
-        }
     ]
 })

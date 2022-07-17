@@ -7,21 +7,22 @@
                     <h2 class="all">全部商品分类</h2>
                     <!-- 三级联动 -->
                     <div class="sort">
-                    <div class="all-sort-list2">
+                        <!-- 利用事件委派和编程时导航结合实现路由跳转和传参 -->
+                    <div class="all-sort-list2" @click.prevent="goSearch">
                         <div class="item" v-for="(c1,index) in categoryList":key="c1.categoryId" :class="{cur:currentedIndex==index}">
                             <h3 @mouseenter="changeIndex(index)">
-                                <a href="">{{c1.categoryName}}-{{index}}</a>
+                                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId" href="">{{c1.categoryName}}-{{index}}</a>
                             </h3>
                             <!-- 二级联动 -->
                             <div class="item-list clearfix" :style="{display:currentedIndex==index?'block':'none'}">
                                 <div class="subitem" v-for="(c2,index) in c1.categoryChild":key="c2.categoryId">
                                     <dl class="fore">
                                         <dt>
-                                            <a href="">{{c2.categoryName}}</a>
+                                            <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId" href="">{{c2.categoryName}}</a>
                                         </dt>
                                         <dd>
                                             <em v-for="(c3,index) in c2.categoryChild":key="c3.categoryId">
-                                                <a href="">{{c3.categoryName}}</a>
+                                                <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId" href="">{{c3.categoryName}}</a>
                                             </em>
                                         </dd>
                                     </dl>
@@ -68,19 +69,46 @@ export default {
         })
     },
     methods:{
-        // 鼠标移入一级分类回调
-        // changeIndex(index){
-        //     //index 鼠标移动上某一个一级分类的index
-        //     this.currentedIndex=index;
-        // },
-        // 三级联动节流
+        // 三级联动节流  鼠标移入一级分类回调
         changeIndex:throttle(function(index){
             this.currentedIndex = index
         },50),
         // 鼠标移除三级分类回调
         leaveIndex(){
             this.currentedIndex=-1
+        },
+        goSearch(event) {
+      //第一个问题:div父节点子元素太多【h3、h2、em、dt、dd、dl...a】？你怎么知道你点击的一定是a
+      //第二个问题:要区分一级分类、二级分类、三级分类的a标签【category1Id|category2Id|category2Id】
+      let targetNode = event.target;
+      //获取触发事件节点的自定义属性【a:data-categoryName】
+      let { categoryname, category1id, category2id, category3id } =
+        targetNode.dataset;
+      //判断点击的是a【不管是1|2|3】
+      if (categoryname) {
+        //点击只要是a,就是往search模块跳转
+        var locations = {
+          name: "search",
+          query: { categoryName: categoryname },
+        };
+        //一级分类的a
+        if (category1id) {
+          locations.query.category1Id = category1id;
+        } else if (category2id) {
+          //二级分类的a
+          locations.query.category2Id = category2id;
+        } else {
+          //三级分类的a
+          locations.query.category3Id = category3id;
         }
+        //点击商品分类按钮的时候,如果路径当中携带params参数,需要合并携带给search模块
+        if (this.$route.params.keyword) {
+          locations.params = this.$route.params;
+        }
+        //目前商品分类这里携带参数只有query参数
+        this.$router.push(locations);
+      }
+    }, 
     }
 }
 </script>

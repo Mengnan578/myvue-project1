@@ -47,6 +47,7 @@
 
 <script>
 import {mapState} from "vuex";
+import throttle from 'lodash/throttle'
 export default {
     name:"TypeNav",
     data(){
@@ -68,10 +69,14 @@ export default {
     },
     methods:{
         // 鼠标移入一级分类回调
-        changeIndex(index){
-            // index 鼠标移动上某一个一级分类的index
-            this.currentedIndex=index;
-        },
+        // changeIndex(index){
+        //     //index 鼠标移动上某一个一级分类的index
+        //     this.currentedIndex=index;
+        // },
+        // 三级联动节流
+        changeIndex:throttle(function(index){
+            this.currentedIndex = index
+        },50),
         // 鼠标移除三级分类回调
         leaveIndex(){
             this.currentedIndex=-1

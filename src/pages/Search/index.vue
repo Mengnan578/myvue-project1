@@ -1,6 +1,7 @@
 <template>
   <div>
     我是搜索组件
+    <TypeNav></TypeNav>
   </div>
 </template>
 

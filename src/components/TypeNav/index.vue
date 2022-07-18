@@ -2,11 +2,11 @@
   <!-- 商品分类导航 -->
         <div class="type-nav">
             <div class="container">
-                <div @mouseleave="leaveIndex()">
+                <div @mouseleave="leaveIndex()" @mouseenter="enterShow()">
                 <!-- 事件委派 -->
                     <h2 class="all">全部商品分类</h2>
                     <!-- 三级联动 -->
-                    <div class="sort">
+                    <div class="sort" v-show="show">
                         <!-- 利用事件委派和编程时导航结合实现路由跳转和传参 -->
                     <div class="all-sort-list2" @click.prevent="goSearch">
                         <div class="item" v-for="(c1,index) in categoryList":key="c1.categoryId" :class="{cur:currentedIndex==index}">
@@ -54,13 +54,20 @@ export default {
     data(){
         return {
             // 存储用户鼠标移上哪一个分类
-            currentedIndex: -1
+            currentedIndex: -1,
+            // 一级分类的显示和隐藏 
+            show:true,
         }
     },
     // 当组件挂载
     mounted(){
         // 通知vue发送请求，获取数据，存储在仓库中
-        this.$store.dispatch("categoryList")
+        this.$store.dispatch("categoryList");
+        // 当组件挂载完毕，让show改变
+        // 如果不是home组件，默认隐藏
+        if(this.$route.path!="/home"){
+            this.show = false
+        }
     },
     computed:{
         ...mapState({
@@ -75,7 +82,15 @@ export default {
         },50),
         // 鼠标移除三级分类回调
         leaveIndex(){
-            this.currentedIndex=-1
+            if(this.$route.path!="/home"){
+                this.currentedIndex=-1,
+                this.show = false
+            }
+        },
+        enterShow(){
+            if(this.$route.path!="/home"){
+                this.show=true
+            }
         },
         goSearch(event) {
       //第一个问题:div父节点子元素太多【h3、h2、em、dt、dd、dl...a】？你怎么知道你点击的一定是a

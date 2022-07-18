@@ -20,6 +20,10 @@ export default {
   components: {
       Header,
       Footer
+  },
+  mounted(){
+    // 通知vue发送请求，获取数据，存储在仓库中
+    this.$store.dispatch("categoryList");
   }
 }
 </script>

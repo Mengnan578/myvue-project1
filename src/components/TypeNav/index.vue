@@ -95,8 +95,6 @@ export default {
   },
   // 当组件挂载
   mounted() {
-    // 通知vue发送请求，获取数据，存储在仓库中
-    this.$store.dispatch("categoryList");
     // 当组件挂载完毕，让show改变
     // 如果不是home组件，默认隐藏
     if (this.$route.path != "/home") {

@@ -56,7 +56,11 @@ export default {
       // 第一种路由传参数：字符串形式
       //this.$router.push("/search"+this.keyWord+"?k="+this.keyWord.toUpperCase())
       // 第二种，模板字符串
-      this.$router.push(`/search/${this.keyWord}?k=${this.keyWord.toUpperCase()}`)
+      if(this.$router.query){
+        let location = {name:"search",params:{keyword:this.keyWord||undefined}}
+        location.query=this.$router.query
+        this.$router.push(location)
+      }
       // 第三种，对象（常用），需要给路由起一个名字
       //this.$router.push({name:"search",params:{keyWord:this.keyWord},query:{k:this.keyWord.toUpperCase()}})
       //this.$router.push('/search')

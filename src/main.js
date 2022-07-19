@@ -5,6 +5,8 @@ import router from '@/router'
 import TypeNav from '@/components/TypeNav'
 import { reqCategoryList } from "@/api/index"
 import store from "@/store"
+// 引入mock
+import '@/mock/mockServe'
 Vue.component(TypeNav.name, TypeNav);
 reqCategoryList();
 new Vue({
